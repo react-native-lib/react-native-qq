@@ -124,7 +124,8 @@ RCT_EXPORT_METHOD(logout)
             CGFloat thumbImageSize = 80;
             size = CGSizeMake(thumbImageSize,thumbImageSize);
         }
-        [_bridge.imageLoader loadImageWithURLRequest:imageUrl callback:^(NSError *error, UIImage *image) {
+        NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+        [_bridge.imageLoader loadImageWithURLRequest:req callback:^(NSError *error, UIImage *image) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self _shareToQQWithData:aData image:image scene:aScene resolve:resolve reject:reject];
             });
@@ -159,7 +160,7 @@ RCT_EXPORT_METHOD(logout)
         message = [QQApiTextObject objectWithText:description];
     }
     else if ([type isEqualToString: RCTQQShareTypeImage]) {
-        NSData *imgData = UIImageJPEGRepresentation(image, 1);
+        NSData *imgData = UIImageJPEGRepresentation(image, 0.1);
         message = [QQApiImageObject objectWithData:imgData
                                   previewImageData:imgData
                                              title:title
@@ -232,13 +233,13 @@ RCT_EXPORT_METHOD(logout)
 #pragma mark - qq delegate
 - (void)onReq:(QQBaseReq *)req
 {
-    
+
 }
 
 - (void)onResp:(QQBaseResp *)resp
 {
     if ([resp isKindOfClass:[SendMessageToQQResp class]]) {
-        
+
     }
     NSMutableDictionary *body = @{@"type":@"QQShareResponse"}.mutableCopy;
     body[@"errMsg"] = resp.errorDescription;
@@ -250,13 +251,13 @@ RCT_EXPORT_METHOD(logout)
     }
     body[@"result"] =resp.result;
     body[@"extendInfo"] =resp.extendInfo;
-    
+
     [self.bridge.eventDispatcher sendAppEventWithName:@"QQ_Resp" body:body];
 }
 
 - (void)isOnlineResponse:(NSDictionary *)response
 {
-    
+
 }
 
 #pragma mark - oauth delegate
@@ -283,7 +284,7 @@ RCT_EXPORT_METHOD(logout)
         body[@"errMsg"] = @"login failed";
     }
     [self.bridge.eventDispatcher sendAppEventWithName:@"QQ_Resp" body:body];
-    
+
 }
 
 - (void)tencentDidNotNetWork

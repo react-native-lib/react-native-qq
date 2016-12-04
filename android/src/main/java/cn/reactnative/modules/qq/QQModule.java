@@ -62,7 +62,9 @@ public class QQModule extends ReactContextBaseJavaModule implements IUiListener,
         if (!appInfo.metaData.containsKey("QQ_APPID")){
             throw new Error("meta-data QQ_APPID not found in AndroidManifest.xml");
         }
+
         this.appId = appInfo.metaData.get("QQ_APPID").toString();
+        Log.d("QQ_APPID", "QQ_APPID:"+this.appId);
     }
 
     @Override

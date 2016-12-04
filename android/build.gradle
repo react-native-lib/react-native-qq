@@ -12,6 +12,10 @@ android {
     ndk {
       abiFilters "armeabi-v7a", "x86"
     }
+
+    manifestPlaceholders = [
+            QQ_APPID: "xxx"
+    ]
   }
 }
 

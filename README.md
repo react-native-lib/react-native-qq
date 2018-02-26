@@ -2,6 +2,9 @@
 
 React Native的QQ登录插件, react-native版本需要0.17.0及以上
 
+#v3.0.2
+rn>0.47
+
 ## 如何安装
 
 ### 首先安装npm包

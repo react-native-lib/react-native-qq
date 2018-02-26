@@ -2,3 +2,6 @@
 *.iml
 ios/RCTQQAPI.xcodeproj/xcuserdata
 /android/build
+
+.idea
+npm-debug.log
